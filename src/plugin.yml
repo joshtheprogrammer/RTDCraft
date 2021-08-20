@@ -1,0 +1,14 @@
+name: RTD
+version: 1.0
+description: Roll the dice
+author: uziza
+
+main: user.uziza.RTD.RTD
+
+commands:
+  roll:
+    usage: (Example) /roll 2d6
+    description: Roll the dice
+  bind:
+     usage: (Example) /bind /roll 2d6
+     description: Binds roll to weapon
