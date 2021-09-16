@@ -16,7 +16,7 @@ public class RTD extends JavaPlugin implements Listener{
 		this.getCommand(rtdCMD.roll).setExecutor(rtdCMD);
 		this.getCommand(rtdCMD.bind).setExecutor(rtdCMD);
 		getServer().getPluginManager().registerEvents(new RTDEvents(this), this);
-		getServer().getPluginManager().registerEvents(new DistanceStick(), this);
+		getServer().getPluginManager().registerEvents(new DistanceStick(this), this);
 		cooldowns = new RTDCooldown(this);
 	}
 	
