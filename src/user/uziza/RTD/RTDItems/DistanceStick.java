@@ -33,8 +33,6 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.util.RayTraceResult;
 import org.bukkit.util.Vector;
 
-import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
-
 import user.uziza.RTD.RTD;
 
 public class DistanceStick implements Listener {
