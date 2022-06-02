@@ -1,6 +1,7 @@
 package user.uziza.RTD.RTDItems;
 
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -8,11 +9,10 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.function.Predicate;
 
+import org.bukkit.Bukkit;
 import org.bukkit.FluidCollisionMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_16_R3.entity.CraftThrownPotion;
-import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftItemStack;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -87,11 +87,15 @@ public class DistanceStick implements Listener {
 										Vector directionVector = shootLocation.getDirection().normalize();
 										RayTraceResult rt = player.getWorld().rayTrace(shootLocation, directionVector, 250, FluidCollisionMode.ALWAYS, false, 0, Entity -> (Entity.getUniqueId() != player.getUniqueId()));
 										
+										DecimalFormat DF_2 = new DecimalFormat("0.00");
+										
 										if (rt.getHitEntity() != null) {
-											MSG = " ["+rt.getHitEntity().getType().toString()+"]"+": "+String.valueOf(player.getLocation().distance(rt.getHitEntity().getLocation())) + " ("+String.valueOf(player.getLocation().distance(rt.getHitEntity().getLocation())*2.5)+")";
+												String thing = DF_2.format((Double) player.getLocation().distance(rt.getHitEntity().getLocation())-1);
+												MSG = " ["+rt.getHitEntity().getType().toString()+"]"+": "+ "("+thing+" Feet)";
 										}
 										else if (rt.getHitBlock() != null) {
-												MSG = " ["+rt.getHitBlock().getType().toString()+"]"+": "+String.valueOf(player.getLocation().distance(rt.getHitBlock().getLocation())) + " ("+String.valueOf(player.getLocation().distance(rt.getHitBlock().getLocation())*2.5)+")";
+												String thing =  DF_2.format((Double) player.getLocation().distance(rt.getHitBlock().getLocation())-1);
+												MSG = " ["+rt.getHitBlock().getType().toString()+"]"+": "+ "("+thing+" Feet)";
 										}
 										
 									}
