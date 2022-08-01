@@ -9,6 +9,9 @@ commands:
   roll:
     usage: (Example) /roll 2d6
     description: Roll the dice
+  rollmax:
+    usage: (Example) /rollmax 2d6
+    description: Roll the dice, select maximum value
   bind:
      usage: (Example) /bind /roll 2d6
      description: Binds roll to weapon

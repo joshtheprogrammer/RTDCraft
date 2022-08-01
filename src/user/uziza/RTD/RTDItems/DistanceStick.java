@@ -85,22 +85,20 @@ public class DistanceStick implements Listener {
 									try {
 										Location shootLocation = player.getEyeLocation();
 										Vector directionVector = shootLocation.getDirection().normalize();
-										RayTraceResult rt = player.getWorld().rayTrace(shootLocation, directionVector, 250, FluidCollisionMode.ALWAYS, false, 0, Entity -> (Entity.getUniqueId() != player.getUniqueId()));
-										
-										DecimalFormat DF_2 = new DecimalFormat("0.00");
+										RayTraceResult rt = player.getWorld().rayTrace(shootLocation, directionVector, 512, FluidCollisionMode.ALWAYS, false, 0, Entity -> (Entity.getUniqueId() != player.getUniqueId()));
 										
 										if (rt.getHitEntity() != null) {
-												String thing = DF_2.format((Double) player.getLocation().distance(rt.getHitEntity().getLocation())-1);
-												MSG = " ["+rt.getHitEntity().getType().toString()+"]"+": "+ "("+thing+" Feet)";
+											double thing_val = player.getLocation().distance(rt.getHitEntity().getLocation())-1;
+											MSG = " ["+rt.getHitEntity().getType().toString()+"]"+": "+ "("+Math.round(thing_val)*5+" Feet)";
 										}
 										else if (rt.getHitBlock() != null) {
-												String thing =  DF_2.format((Double) player.getLocation().distance(rt.getHitBlock().getLocation())-1);
-												MSG = " ["+rt.getHitBlock().getType().toString()+"]"+": "+ "("+thing+" Feet)";
+												double thing_val = player.getLocation().distance(rt.getHitBlock().getLocation())-1;
+												MSG = " ["+rt.getHitBlock().getType().toString()+"]"+": "+ "("+Math.round(thing_val)*5+" Feet)";
 										}
 										
 									}
 									catch (Exception p) {
-										MSG = ": Greater than 250 blocks.";
+										MSG = ": Greater than 512 blocks.";
 									}
 									finally {
 										player.sendMessage("Distance" + MSG);
@@ -127,13 +125,18 @@ public class DistanceStick implements Listener {
 								else if (a.equals(Action.LEFT_CLICK_BLOCK)) {
 									if (point.containsKey(player.getUniqueId())) {
 										player.sendMessage("Point B: " + e.getClickedBlock().getType());
-										player.sendMessage(String.valueOf(point.get(player.getUniqueId()).distance(e.getClickedBlock().getLocation())));
+										double thing_val = point.get(player.getUniqueId()).distance(e.getClickedBlock().getLocation())-1;
+										if (thing_val < 0) {
+											thing_val = 0;
+										}
+										player.sendMessage(String.valueOf(Math.round(thing_val)*5));
 										point.remove(player.getUniqueId());
 									}
 									else {
 										player.sendMessage("Point A: " + e.getClickedBlock().getType());
 										point.put(player.getUniqueId(), e.getClickedBlock().getLocation());
 									}
+									e.setCancelled(true);
 								}
 								
 							}
@@ -163,17 +166,19 @@ public class DistanceStick implements Listener {
 								try {
 									Location shootLocation = player.getEyeLocation();
 									Vector directionVector = shootLocation.getDirection().normalize();
-									RayTraceResult rt = player.getWorld().rayTrace(shootLocation, directionVector, 250, FluidCollisionMode.ALWAYS, false, 0, Entity -> (Entity.getUniqueId() != player.getUniqueId()));
+									RayTraceResult rt = player.getWorld().rayTrace(shootLocation, directionVector, 512, FluidCollisionMode.ALWAYS, false, 0, Entity -> (Entity.getUniqueId() != player.getUniqueId()));
 									
 									if (rt.getHitEntity() != null) {
-										MSG = " ["+rt.getHitEntity().getType().toString()+"]"+": "+String.valueOf(player.getLocation().distance(rt.getHitEntity().getLocation())) + " ("+String.valueOf(player.getLocation().distance(rt.getHitEntity().getLocation())*2.5)+")";
+										double thing_val = player.getLocation().distance(rt.getHitEntity().getLocation())-1;
+										MSG = " ["+rt.getHitEntity().getType().toString()+"]"+": "+ "("+Math.round(thing_val)*5+" Feet)";
 									}
 									else if (rt.getHitBlock() != null) {
-											MSG = " ["+rt.getHitBlock().getType().toString()+"]"+": "+String.valueOf(player.getLocation().distance(rt.getHitBlock().getLocation())) + " ("+String.valueOf(player.getLocation().distance(rt.getHitBlock().getLocation())*2.5)+")";
+											double thing_val = player.getLocation().distance(rt.getHitBlock().getLocation())-1;
+											MSG = " ["+rt.getHitBlock().getType().toString()+"]"+": "+ "("+Math.round(thing_val)*5+" Feet)";
 									}
 								}
 								catch (Exception p) {
-									MSG = ": Greater than 250 blocks.";
+									MSG = ": Greater than 512 blocks.";
 								}
 								finally {
 									player.sendMessage("Distance" + MSG);
@@ -207,7 +212,9 @@ public class DistanceStick implements Listener {
 							if (victim != null) {
 									if (point.containsKey(player.getUniqueId())) {
 										player.sendMessage("Point B: " + victim.getType());
-										player.sendMessage(String.valueOf(point.get(player.getUniqueId()).distance(victim.getLocation())));
+										
+										double thing_val = point.get(player.getUniqueId()).distance(victim.getLocation())-1;
+										player.sendMessage(String.valueOf(Math.round(thing_val)*5));
 										point.remove(player.getUniqueId());
 									}
 									else {
